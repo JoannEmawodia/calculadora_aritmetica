@@ -30,6 +30,12 @@
       </div>
     </div>
   </form>
+  <section>
+    <div class="d-flex justify-content-center align-items-center mt-5">
+      <h2>Resultado: </h2>
+      <h3 class="ms-3">0</h3>
+    </div>
+  </section>
   
   
   </div>
