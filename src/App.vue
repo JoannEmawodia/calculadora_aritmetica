@@ -1,11 +1,14 @@
 <script setup></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="container">
+    <header class="p-5 mb-4 mt-4 text-bg-secondary runded-3">
+      <h1 class="mx-auto">Calculadora</h1>
+      <p>
+        Descubra o resultado de sua conta aritmética!
+      </p>
+  </header>
+  </div>
 </template>
 
 <style scoped></style>
