@@ -1,13 +1,12 @@
 <script setup>
-import {reactive, ref} from 'vue';
+import {reactive, watch} from 'vue';
 
 const estado = reactive({
   resultado:0,
   expressoes:'',
+  numero1: 0,
+  numero2: 0,
 });
-
-const num1= ref(0);
-const num2 = ref (0);
 
 const mais = (a, b) => {
   return a + b;
@@ -25,28 +24,30 @@ const divide = (a, b) => {
   return a / b;
 };
 
-const calcularExpressoes = () =>{
-  const numero1 = num1.value;
-  const numero2 = num2.value;
+const calcular = () =>{
 
   switch(estado.expressoes){
     case 'adicao':
-      estado.resultado = mais(numero1, numero2);
+      estado.resultado = mais(estado.numero1, estado.numero2);
       break;
     case 'subtracao':
-      estado.resultado = menos(numero1, numero2);
+      estado.resultado = menos(estado.numero1, estado.numero2);
       break;
     case 'multiplicacao':
-      estado.resultado = multiplica(numero1, numero2);
+      estado.resultado = multiplica(estado.numero1, estado.numero2);
       break;
     case 'divisao':
-      estado.resultado = divide(numero1, numero2);
+      estado.resultado = divide(estado.numero1, estado.numero2);
       break;
     default:
       estado.resultado = 0;
   }
 }
 
+watch(
+  () => [estado.numero1, estado.numero2, estado.expressoes],
+  calcular
+);
 </script>
 
 <template>
@@ -57,13 +58,13 @@ const calcularExpressoes = () =>{
         Descubra o resultado de sua conta aritmética!
       </p>
     </header>
-    <form class="mt-5 d-flex justify-content-center align-items-center" @submit.prevent="calcularExpressoes"> 
+    <form class="mt-5 d-flex justify-content-center align-items-center"> 
       <div class="row">
         <div class="col-4">
-          <input type="number" placeholder="0"  v-model="num1" class=" form-control border border-3 me-5"/>
+          <input type="number" placeholder="0"  v-model.number="estado.numero1" class=" form-control border border-3 me-5"/>
         </div>
         <div class="col-2">
-          <select @change="evento=> estado.expressoes = evento.target.value" name="" id="" class="form-control p-1 w-100 me-2">
+          <select v-model="estado.expressoes" @change="calcular" class="form-control p-1 w-100 me-2">
             <option value="vazio"></option>
             <option value="adicao">+</option>
             <option value="subtracao">-</option>
@@ -72,10 +73,7 @@ const calcularExpressoes = () =>{
           </select>
         </div>
         <div class="col-4">
-          <input type="number" placeholder="0" v-model="num2" class="form-control border border-3"/>
-        </div>
-        <div class="col-2">
-          <button type= "submit" class="btn btn-outline-primary btn-sm"> Calcular</button>
+          <input type="number" placeholder="0" v-model.number="estado.numero2" class="form-control border border-3"/>
         </div>
       </div>
     </form>
